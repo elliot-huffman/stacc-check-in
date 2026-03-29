@@ -2,6 +2,7 @@
 bin/
 user-interface/.next/
 user-interface/out/
+user-interface/public/LicenseList.txt
 
 # Package output
 dist/
