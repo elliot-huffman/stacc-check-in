@@ -11,7 +11,7 @@
             "dependsOn": [
                 "Build Runtime",
                 "Start UI Dev Server"
-            ],
+            ]
         },
         {
             "label": "Build Runtime",
@@ -23,7 +23,7 @@
             "type": "npm",
             "script": "build:Dev:Runtime",
             "group": "build",
-            "problemMatcher": [],
+            "problemMatcher": []
         },
         {
             "label": "Start UI Dev Server",
