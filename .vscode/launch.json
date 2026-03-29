@@ -1,0 +1,29 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Debug - Runtime",
+            "type": "node",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "runtimeExecutable": "${workspaceFolder}/node_modules/.bin/electron",
+            "windows": {
+                "runtimeExecutable": "${workspaceFolder}/node_modules/.bin/electron.cmd"
+            },
+            "args": [
+                "."
+            ],
+            "outputCapture": "std",
+            "preLaunchTask": "Runtime Dev"
+        },
+        {
+            "name": "Debug - UI (Edge)",
+            "request": "launch",
+            "type": "msedge",
+            "url": "http://localhost:3000?mock=true",
+            "webRoot": "${workspaceFolder}/user-interface",
+            "sourceMaps": true,
+            "preLaunchTask": "Start UI Dev Server"
+        }
+    ]
+}

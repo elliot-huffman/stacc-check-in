@@ -1,0 +1,51 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Runtime Dev",
+            "detail": "Starts the UI server and builds the runtime, to prep for debugger attachment.",
+            "icon": {
+                "id": "group-by-ref-type",
+                "color": "terminal.ansiGreen"
+            },
+            "dependsOn": [
+                "Build Runtime",
+                "Start UI Dev Server"
+            ],
+        },
+        {
+            "label": "Build Runtime",
+            "detail": "Builds the backend TypeScript into executable code.",
+            "icon": {
+                "id": "rocket",
+                "color": "terminal.ansiYellow"
+            },
+            "type": "npm",
+            "script": "build:Dev:Runtime",
+            "group": "build",
+            "problemMatcher": [],
+        },
+        {
+            "label": "Start UI Dev Server",
+            "detail": "Starts the hot-reload compatible UI development server for live debugging and dev support.",
+            "icon": {
+                "id": "server-process",
+                "color": "terminal.ansiYellow"
+            },
+            "isBackground": true,
+            "type": "npm",
+            "script": "start:UserInterface",
+            "problemMatcher": {
+                "owner": "custom",
+                "pattern": {
+                    "regexp": "^$"
+                },
+                "background": {
+                    "activeOnStart": true,
+                    "beginsPattern": "▲ Next.js *",
+                    "endsPattern": "✓ Ready in *"
+                }
+            }
+        }
+    ]
+}
