@@ -1,5 +1,5 @@
-appId: "com.st-teresa.activitycentercheckin"
-productName: "Activity Center - Check-In"
+appId: "com.st-teresa.check-in"
+productName: "STACC - Check-In"
 executableName: "Check-In"
 electronFuses:
   runAsNode: false

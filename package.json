@@ -1,5 +1,5 @@
 {
-  "name": "activity-center-check-in",
+    "name": "stacc-check-in",
     "version": "1.0.0",
     "private": true,
     "description": "Checks the presented ID to see if it is a valid ID and records the entry/exit of the user",
