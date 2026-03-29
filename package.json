@@ -1,61 +1,63 @@
 {
   "name": "activity-center-check-in",
-  "version": "1.0.0",
-  "private": true,
-  "description": "Checks the presented ID to see if it is a valid ID and records the entry/exit of the user",
-  "type": "module",
-  "main": "bin/index.js",
-  "keywords": [
-    "automation",
-    "check-in",
-    "membership",
-    "management",
-    "kiosk"
-  ],
-  "homepage": "https://github.com/elliot-huffman/stacc-activity-center#readme",
-  "bugs": {
-    "url": "https://github.com/elliot-huffman/stacc-activity-center/issues"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/elliot-huffman/stacc-activity-center.git"
-  },
-  "license": "MIT",
-  "author": "Elliot Huffman",
-  "scripts": {
-    "build:Prod:BackEnd": "tsc --sourceMap false",
-    "build:Prod:UserInterface": "",
-    "build:Prod": "npm run build:Prod:BackEnd && npm run build:Prod:UserInterface",
-    "package": "electron-builder build --config"
-  },
-  "packageManager": "npm@11.12.1",
-  "devEngines": {
-    "runtime": {
-      "name": "node",
-      "version": ">=24.13.0",
-      "onFail": "error"
+    "version": "1.0.0",
+    "private": true,
+    "description": "Checks the presented ID to see if it is a valid ID and records the entry/exit of the user",
+    "type": "module",
+    "main": "bin/index.js",
+    "keywords": [
+        "automation",
+        "check-in",
+        "membership",
+        "management",
+        "kiosk"
+    ],
+    "homepage": "https://github.com/elliot-huffman/stacc-activity-center#readme",
+    "bugs": {
+        "url": "https://github.com/elliot-huffman/stacc-activity-center/issues"
     },
-    "packageManager": {
-      "name": "npm",
-      "onFail": "error"
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/elliot-huffman/stacc-activity-center.git"
+    },
+    "license": "MIT",
+    "author": "Elliot Huffman",
+    "scripts": {
+        "start:Runtime": "electron .",
+        "start:UserInterface": "next dev user-interface",
+        "build:Prod:Runtime": "tsc --project runtime --sourceMap false",
+        "build:Prod:UserInterface": "next build user-interface",
+        "build:Prod": "npm run build:Prod:Runtime && npm run build:Prod:UserInterface",
+        "package": "electron-builder build"
+    },
+    "packageManager": "npm@11.12.1",
+    "devEngines": {
+        "runtime": {
+            "name": "node",
+            "version": ">=24.13.0",
+            "onFail": "error"
+        },
+        "packageManager": {
+            "name": "npm",
+            "onFail": "error"
+        }
+    },
+    "devDependencies": {
+        "@electron/fuses": "~2.1.1",
+        "babel-plugin-react-compiler": "~1.0.0",
+        "electron": "~41.1.0",
+        "electron-builder": "~26.8.1",
+        "typescript": "~5.9.3"
+    },
+    "dependencies": {
+        "@azure/identity": "~4.13.1",
+        "@fluentui/react-components": "~9.73.5",
+        "@fluentui/react-icons": "~2.0.323",
+        "@reduxjs/toolkit": "~2.11.2",
+        "next": "~16.2.1",
+        "react": "~19.2.4",
+        "react-dom": "~19.2.4",
+        "react-redux": "~9.2.0",
+        "typia": "~12.0.1"
     }
-  },
-  "devDependencies": {
-    "@electron/fuses": "~2.1.1",
-    "babel-plugin-react-compiler": "~1.0.0",
-    "electron": "~41.1.0",
-    "electron-builder": "~26.8.1",
-    "typescript": "~5.9.3"
-  },
-  "dependencies": {
-    "@azure/identity": "~4.13.1",
-    "@fluentui/react-components": "~9.73.5",
-    "@fluentui/react-icons": "~2.0.323",
-    "@reduxjs/toolkit": "~2.11.2",
-    "next": "~16.2.1",
-    "react": "~19.2.4",
-    "react-dom": "~19.2.4",
-    "react-redux": "~9.2.0",
-    "typia": "~12.0.1"
-  }
 }
