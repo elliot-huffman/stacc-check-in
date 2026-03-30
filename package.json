@@ -40,7 +40,7 @@
         "test": "npm run test:Unit && npm run test:Integration",
         "test:Unit": "echo Coming soon!",
         "test:Integration": "echo Coming soon!",
-        "package": "electron-builder build",
+        "package": "electron-builder build --config electronBuilder.ts",
         "generate:LicenseList": "generate-license-file --input package.json --output ./user-interface/public/LicenseList.txt --overwrite"
     },
     "packageManager": "npm@11.12.1",
