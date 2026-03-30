@@ -31,6 +31,7 @@
 		"js/ts.format.insertSpaceBeforeFunctionParenthesis": false,
 		"js/ts.format.semicolons": "insert",
 		"js/ts.implementationsCodeLens.enabled": true,
+		"js/ts.implicitProjectConfig.checkJs": true,
 		"js/ts.implicitProjectConfig.target": "ES2024",
 		"js/ts.inlayHints.enumMemberValues.enabled": true,
 		"js/ts.preferences.quoteStyle": "single",
