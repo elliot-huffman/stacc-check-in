@@ -1,3 +1,5 @@
+'use client';
+
 import { FluentProvider, RendererProvider, SSRProvider, createDOMRenderer, renderToStyleElements, webDarkTheme, webLightTheme } from '@fluentui/react-components';
 import { Provider, useDispatch, useSelector } from 'react-redux';
 import { Suspense, useCallback, useEffect, useMemo, useRef, useState } from 'react';
