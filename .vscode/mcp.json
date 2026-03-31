@@ -15,9 +15,20 @@
             "type": "http",
             "url": "https://learn.microsoft.com/api/mcp"
         },
+        "MDN": {
+            "url": "https://mcp.mdn.mozilla.net",
+            "type": "http"
+        },
         "github": {
             "type": "http",
             "url": "https://api.githubcopilot.com/mcp/"
+        },
+        "next-devtools": {
+            "command": "npx",
+            "args": [
+                "-y",
+                "next-devtools-mcp@latest"
+            ]
         }
     }
 }
