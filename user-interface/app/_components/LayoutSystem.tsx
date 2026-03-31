@@ -9,7 +9,7 @@ import { useStyleList } from './styles/components/layoutSystem';
 interface LayoutBaseProps {
     /** Child elements rendered inside the layout container. */
     'children'?: React.ReactNode;
-    /** Optional extra Griffel or external class name to merge with the built-in classes. */
+    /** Optional extra Griffel or external class name to override built-in classes. */
     'className'?: string;
     /** Optional React ref attached to the rendered inner div element. */
     'ref'?: React.Ref<HTMLDivElement>;
@@ -21,8 +21,8 @@ interface LayoutBaseProps {
     'align'?: LayoutAlign;
     /** Named gap size placed between direct children. */
     'gap'?: LayoutGap;
-    /** Flag that allows children to wrap onto additional lines or columns. */
-    'wrap'?: boolean;
+    /** Flag that disables wrapping when a single line or column is required. */
+    'noWrap'?: boolean;
     /** Flag that stretches the container to fill its parent box. */
     'fill'?: boolean;
 }
@@ -96,7 +96,7 @@ export function Layout(props: LayoutProps): React.ReactNode {
         justifyClass,
         alignClass,
         gapClass,
-        props.wrap ? compiledStyles.wrap : '',
+        props.noWrap ? '' : compiledStyles.wrap,
         props.fill ? compiledStyles.fill : '',
         props.className
     );
@@ -198,7 +198,7 @@ export function LayoutItem(props: LayoutItemProps): React.ReactNode {
         alignClass,
         gapClass,
         alignSelfClass,
-        props.wrap ? compiledStyles.wrap : '',
+        props.noWrap ? '' : compiledStyles.wrap,
         props.fill ? compiledStyles.fill : '',
         props.grow ? compiledStyles.grow : '',
         props.className
