@@ -10,7 +10,7 @@ import { Text } from '@fluentui/react-components';
 export default function Page(): React.ReactNode {
     return (
         <Layout direction="row">
-            <LayoutItem direction="column">
+            <LayoutItem>
                 <Text>Hello, World - item!</Text>
                 <Text>Hello, World - item!</Text>
             </LayoutItem>
