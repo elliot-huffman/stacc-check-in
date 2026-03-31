@@ -10,7 +10,7 @@ export type LayoutJustify = 'start' | 'center' | 'end' | 'space-between' | 'spac
 export type LayoutAlign = 'start' | 'center' | 'end' | 'stretch' | 'baseline';
 
 /** Allowed gap presets used by the layout system. */
-export type LayoutGap = 'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+export type LayoutGap = 'none' | 'extra-small' | 'small' | 'medium' | 'large' | 'extra-large';
 
 /** Allowed self-alignment overrides for grouped layout items. */
 export type LayoutItemAlign = LayoutAlign | 'auto';

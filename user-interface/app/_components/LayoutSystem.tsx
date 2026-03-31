@@ -81,12 +81,12 @@ export function Layout(props: LayoutProps): React.ReactNode {
 
     /** Gap class lookup for this render. */
     const gapClass = {
-        'lg': compiledStyles.gapLg,
-        'md': compiledStyles.gapMd,
+        'extra-large': compiledStyles.gapXl,
+        'extra-small': compiledStyles.gapXs,
+        'large': compiledStyles.gapLg,
+        'medium': compiledStyles.gapMd,
         'none': compiledStyles.gapNone,
-        'sm': compiledStyles.gapSm,
-        'xl': compiledStyles.gapXl,
-        'xs': compiledStyles.gapXs
+        'small': compiledStyles.gapSm
     }[gap];
 
     /** Combined Griffel class name for the rendered layout container. */
@@ -172,12 +172,12 @@ export function LayoutItem(props: LayoutItemProps): React.ReactNode {
 
     /** Gap class lookup for this grouped item render. */
     const gapClass = {
-        'lg': compiledStyles.gapLg,
-        'md': compiledStyles.gapMd,
+        'extra-large': compiledStyles.gapXl,
+        'extra-small': compiledStyles.gapXs,
+        'large': compiledStyles.gapLg,
+        'medium': compiledStyles.gapMd,
         'none': compiledStyles.gapNone,
-        'sm': compiledStyles.gapSm,
-        'xl': compiledStyles.gapXl,
-        'xs': compiledStyles.gapXs
+        'small': compiledStyles.gapSm
     }[gap];
 
     /** Self-alignment class lookup for this grouped item render. */
