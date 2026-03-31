@@ -103,7 +103,9 @@ export function Layout(props: LayoutProps): React.ReactNode {
 
     return (
         <LayoutDirectionContext.Provider value={ direction }>
+            {/* eslint-disable-next-line react-hooks/refs */ }
             <div ref={ props.ref } className={ layoutClassName }>
+                {/* eslint-disable-next-line react-hooks/refs */ }
                 { props.children }
             </div>
         </LayoutDirectionContext.Provider>
@@ -206,7 +208,9 @@ export function LayoutItem(props: LayoutItemProps): React.ReactNode {
 
     return (
         <LayoutDirectionContext.Provider value={ direction }>
+            {/* eslint-disable-next-line react-hooks/refs */ }
             <div ref={ props.ref } className={ layoutItemClassName }>
+                {/* eslint-disable-next-line react-hooks/refs */ }
                 { props.children }
             </div>
         </LayoutDirectionContext.Provider>
