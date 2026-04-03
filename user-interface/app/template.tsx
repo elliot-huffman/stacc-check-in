@@ -1,6 +1,7 @@
 'use client';
 
-import { Layout } from './_components/elements/LayoutSystem';
+import { Layout, LayoutItem } from './_components/elements/LayoutSystem';
+import { TopBar } from './_components/elements/TopBar';
 import { useStyleList } from './_components/styles/globalTemplate';
 
 /** Structure of the template component's props. */
@@ -21,7 +22,12 @@ export default function Template(props: TemplateProps): React.ReactNode {
     // Rendered page wrapper
     return (
         <Layout className={ compiledStyles.rootContainer }>
-            { props.children }
+            <LayoutItem>
+                <TopBar />
+            </LayoutItem>
+            <LayoutItem grow>
+                { props.children }
+            </LayoutItem>
         </Layout>
     );
 }
