@@ -12,12 +12,21 @@ interface LayoutBaseProps {
     /** Optional extra Griffel or external class name to override built-in classes. */
     'className'?: string;
     /** Optional React ref attached to the rendered inner div element. */
-    'ref'?: React.Ref<HTMLDivElement>;
-    /** Requested flex direction for the layout container. */
+    'ref'?: React.Ref<HTMLDivElement> | undefined;
+    /**
+     * Requested flex direction for the layout container.
+     * @default 'row'
+     */
     'direction'?: LayoutDirection;
-    /** Requested main-axis alignment for the layout container. */
+    /**
+     * Requested main-axis alignment for the layout container.
+     * @default 'start'
+     */
     'justify'?: LayoutJustify;
-    /** Requested cross-axis alignment for the layout container. */
+    /**
+     * Requested cross-axis alignment for the layout container.
+     * @default 'stretch'
+     */
     'align'?: LayoutAlign;
     /** Named gap size placed between direct children. */
     'gap'?: LayoutGap;
