@@ -22,12 +22,13 @@ export default function Template(props: TemplateProps): React.ReactNode {
     // Rendered page wrapper
     return (
         <Layout className={ compiledStyles.rootContainer }>
-            <LayoutItem>
-                <TopBar />
-            </LayoutItem>
-            <LayoutItem grow>
-                { props.children }
-            </LayoutItem>
+            <TopBar ref={ topBarRef } />
+            <Layout direction="column" noWrap>
+                <NavigationMenu />
+                <LayoutItem className={ compiledStyles.contentContainer } ref={ contentContainerRef }>
+                    { props.children }
+                </LayoutItem>
+            </Layout>
         </Layout>
     );
 }

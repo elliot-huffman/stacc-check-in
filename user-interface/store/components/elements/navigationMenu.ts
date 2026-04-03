@@ -7,14 +7,14 @@ import type { RootState } from '../../store';
 interface NavigationMenuState {
     /**
      * Flag that indicates whether the navigation menu is visible (`true`) or not (`false`).
-     * @default false
+     * @default true
      */
     'isVisible': boolean;
 }
 
 /** Default set of data that the slice will use upon initialization. */
 const initialState: NavigationMenuState = {
-    'isVisible': false
+    'isVisible': true
 };
 
 /** Section of the global metadata store related to navigation menu visibility. */
