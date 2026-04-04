@@ -7,6 +7,7 @@ import { toggleNavigationMenu } from '../../../store/components/elements/navigat
 import { useDispatch } from 'react-redux';
 import { useRouter } from 'next/navigation';
 import { useStyleList } from '../styles/elements/TopBar';
+import LoginManager from './LoginManager';
 
 /** Props for the TopBar component. */
 interface TopBarProps {
@@ -37,6 +38,9 @@ export function TopBar(props: TopBarProps): React.ReactNode {
                 <LayoutItem>
                     <Button aria-label="Open navigation menu" appearance="subtle" size="large" icon={ <NavigationRegular /> } onClick={ (): void => { dispatch(toggleNavigationMenu()); } } />
                     <Button appearance="transparent" size="large" onClick={ (): void => { router.push('/'); } }>STACC - Check In</Button>
+                </LayoutItem>
+                <LayoutItem>
+                    <LoginManager />
                 </LayoutItem>
             </Layout>
         </>

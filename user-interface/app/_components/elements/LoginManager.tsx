@@ -1,32 +1,56 @@
 'use client';
-import { useCallback, useState } from 'react';
+
+import { useCallback } from 'react';
 import type { UserData } from '../types/UserData';
-import { Button, Text } from '@fluentui/react-components';
+import { Button } from '@fluentui/react-components';
+import { Layout } from './LayoutSystem';
+import { useDispatch, useSelector } from 'react-redux';
+import { clearUserData, setUserData, userDataSelector } from '../../../store/components/elements/userData';
 
 export default function LoginManager() {
-	const [user, setUser] = useState<UserData | null>(null);
+	/** Function to update global redux state in a render optimized way. */
+	const dispatch = useDispatch();
 
-	const fetchUserData = useCallback((): UserData => {
+	/** User data currently stored in the global metadata store. */
+	const user = useSelector(userDataSelector);
+
+
+	/**
+	 * Hook to handle the user login click event and and store the data in state in the global redux store.
+	 */
+	const getUserLogin = useCallback((): void => {
 		const mock: UserData = {
 			id: '123',
 			name: 'Jane Doe',
 			email: 'jane.doe@example.com',
 		};
-		setUser(mock);
-		return mock;
-	}, []);
+
+		// Store the user data in global redux state
+		dispatch(setUserData(mock));
+
+		return void 0;
+
+	}, [dispatch]);
+
+	/**
+	 * Handles auth button clicks by logging a user in when no user exists,
+	 * or logging the current user out when one is available.
+	 */
+	const onAuthenticationClick = useCallback((): void => {
+		if (user) {
+			// Clear the current user data from the global redux state to log the user out
+			dispatch(setUserData(void 0));
+			return;
+		}
+
+		getUserLogin();
+	}, [dispatch, getUserLogin, user]);
 
 	return (
-		<div>
-			<Button onClick={() => fetchUserData()}>Fetch User Data</Button>
-			{user && (
-				<div>
-					<Text>ID: {user.id}</Text>
-					<Text>Name: {user.name}</Text>
-					<Text>Email: {user.email}</Text>
-				</div>
-			)}
-		</div>
+		<Layout>
+			{user && <Button appearance="subtle">{user.name}</Button>}
+			<Button onClick={onAuthenticationClick}>{user ? 'Logout' : 'Login'}</Button>
+		</Layout>
 	);
 }
 
