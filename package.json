@@ -27,7 +27,7 @@
         "prebuild:Prod": "next telemetry disable",
         "prebuild:Dev": "next telemetry disable",
         "start:Runtime": "electron .",
-        "start:UserInterface": "next dev user-interface",
+        "start:UserInterface": "next dev user-interface --hostname localhost --port 3000",
         "build:Prod": "npm run build:Prod:Runtime && npm run build:Prod:UserInterface",
         "build:Prod:Runtime": "tsc --project runtime --sourceMap false",
         "build:Prod:UserInterface": "next build user-interface",
