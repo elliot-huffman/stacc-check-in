@@ -1,8 +1,8 @@
 'use client';
 
+import { AccountManager } from './AccountManager';
 import { Button } from '@fluentui/react-components';
 import { Layout } from './LayoutSystem';
-import LoginManager from './LoginManager';
 import { NavigationRegular } from '@fluentui/react-icons';
 import { toggleNavigationMenu } from '../../../store/components/elements/navigationMenu';
 import { useDispatch } from 'react-redux';
@@ -36,7 +36,7 @@ export function TopBar(props: TopBarProps): React.ReactNode {
         <Layout className={ compiledStyles.default } direction="column" justify="space-between" ref={ props.ref }>
             <Button aria-label="Open navigation menu" appearance="subtle" size="large" icon={ <NavigationRegular /> } onClick={ (): void => { dispatch(toggleNavigationMenu()); } } />
             <Button appearance="transparent" size="large" onClick={ (): void => { router.push('/'); } }>STACC - Check In</Button>
-            <LoginManager />
+            <AccountManager />
         </Layout>
     );
 }

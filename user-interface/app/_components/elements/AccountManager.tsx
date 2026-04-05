@@ -9,9 +9,9 @@ import { sleep } from '../utilities/sleep';
 
 /**
  * Component to manage user login state and display appropriate UI elements based on the current authentication status.
- * @returns A React node containing the login manager UI.
+ * @returns A React node containing the account manager UI.
  */
-export default function LoginManager(): React.ReactNode {
+export function AccountManager(): React.ReactNode {
     /** Function to update global redux state in a render optimized way. */
     const dispatch = useDispatch();
 
