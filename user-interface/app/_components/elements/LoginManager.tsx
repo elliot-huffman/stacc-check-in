@@ -1,11 +1,11 @@
 'use client';
 
-import { Layout, LayoutItem } from './LayoutSystem';
+import { Button, Persona } from '@fluentui/react-components';
 import { setUserData, userDataSelector } from '../../../store/components/elements/userData';
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Button } from '@fluentui/react-components';
 import type { UserData } from '../types/UserData';
+import { sleep } from '../utilities/sleep';
 
 /**
  * Component to manage user login state and display appropriate UI elements based on the current authentication status.
@@ -27,16 +27,17 @@ export default function LoginManager(): React.ReactNode {
     const getUserLogin = useCallback(async (): Promise<void> => {
         /** Mock user data. */
         const mock: UserData = {
-            'email': 'jane.doe@example.com',
+            'displayName': 'Demo User',
             'id': '123',
-            'name': 'Jane Doe'
+            'principalAuthName': 'demo.user@example.com',
+            'userProfilePicture': void 0
         };
 
         // Set the logging in flag to true to disable the login button and show progress
         setIsLoggingIn(true);
 
         // Simulate async operation to fetch user data
-        await new Promise((resolve) => { setTimeout(resolve, 500); });
+        await sleep(500);
 
         // Store the user data in global redux state
         dispatch(setUserData(mock));
@@ -51,35 +52,24 @@ export default function LoginManager(): React.ReactNode {
      */
     const onAuthenticationClick = useCallback(async (): Promise<void> => {
         // Clear the current user data from the global redux state to log the user out
-
-        if (user) { dispatch(setUserData(void 0));
+        if (user) {
+            dispatch(setUserData(void 0));
 
             // Exit early since the user is now logged out and we don't want to log them back in immediately
             return;
         }
 
+        // Start the login process to log the user in since no user is currently logged in
         await getUserLogin();
     }, [dispatch, getUserLogin, user]);
 
-    /** Label to display on the authentication button. */
-    const authButtonLabel = useMemo<string>(() => {
-        // Show "Logging in..." when a login operation is in progress
-        if (isLoggingIn) { return 'Logging in...'; }
-
-        // Show "Logout" when a user is logged in, and "Login" when no user is available
-        if (user) { return 'Logout'; }
-
-        // Show "Login" when no user is available
-        return 'Login';
-    }, [isLoggingIn, user]);
-
     return (
-        <Layout>
-            <LayoutItem>
-                {user && <Button appearance="subtle">{user.name}</Button>}
-            </LayoutItem>
-            <Button disabled={isLoggingIn} onClick={() => { void onAuthenticationClick(); }}>{authButtonLabel}</Button>
-        </Layout>
+        <Button appearance="subtle" disabled={ isLoggingIn } onClick={ () => { void onAuthenticationClick(); } }>
+            <Persona
+                textPosition="before"
+                name={ user?.displayName ?? 'Click here to log in' }
+                secondaryText={ user?.principalAuthName ?? 'Log in with Entra ID' }
+            />
+        </Button>
     );
 }
-

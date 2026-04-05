@@ -2,10 +2,10 @@
 export interface UserData {
     /** The user ID. */
     'id': string;
-
-    /** The users username. */
-    'name': string;
-
-    /** The currently logged in users email address. */
-    'email': string;
+    /** The user's display name. */
+    'displayName': string;
+    /** The currently logged in user's principal authentication name, such as UPN, phone number, or client ID. */
+    'principalAuthName': string;
+    /** Base64 encoded URL of the user's profile picture. */
+    'userProfilePicture': string | undefined;
 }
