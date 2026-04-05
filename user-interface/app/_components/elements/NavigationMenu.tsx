@@ -1,7 +1,7 @@
 'use client';
 
-import { DrawerHeaderTitle, NavDrawer, NavDrawerBody, NavDrawerHeader, NavItem, type OnNavItemSelectData } from '@fluentui/react-components';
-import { Home20Regular, Info20Regular } from '@fluentui/react-icons';
+import { ArrowSync20Regular, BarcodeScanner20Regular, Home20Regular, Info20Regular, PeopleSettings20Regular, Settings20Regular } from '@fluentui/react-icons';
+import { DrawerHeaderTitle, NavDrawer, NavDrawerBody, NavDrawerHeader, NavItem, NavSectionHeader, type OnNavItemSelectData } from '@fluentui/react-components';
 import { navigationMenuVisibleSelector, setNavigationMenuVisible } from '../../../store/components/elements/navigationMenu';
 import { useCallback, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -38,6 +38,12 @@ export function NavigationMenu(): React.ReactNode {
 
                 // Stop execution to prevent fallthrough
                 break;
+            case 'settings':
+                // Execute page navigation
+                router.push('/Settings');
+
+                // Stop execution to prevent fallthrough
+                break;
             case 'about':
                 // Execute page navigation
                 router.push('/About');
@@ -57,6 +63,9 @@ export function NavigationMenu(): React.ReactNode {
         switch (currentPage) {
             case '/':
                 return 'home';
+            case '/Settings':
+            case '/Settings/':
+                return 'settings';
             case '/About':
             case '/About/':
                 return 'about';
@@ -79,12 +88,17 @@ export function NavigationMenu(): React.ReactNode {
                 <DrawerHeaderTitle>Navigation</DrawerHeaderTitle>
             </NavDrawerHeader>
             <NavDrawerBody>
-                <NavItem icon={ <Home20Regular /> } value="home" className={ compiledStyles.colorFix }>
-                    Home
-                </NavItem>
-                <NavItem icon={ <Info20Regular /> } value="about" className={ compiledStyles.colorFix }>
-                    About
-                </NavItem>
+                <NavSectionHeader>General</NavSectionHeader>
+                <NavItem icon={ <Home20Regular /> } value="home" className={ compiledStyles.colorFix }>Home</NavItem>
+                <NavItem icon={ <BarcodeScanner20Regular /> } value="check-in" className={ compiledStyles.colorFix }>Check-In</NavItem>
+
+                <NavSectionHeader>Member Management</NavSectionHeader>
+                <NavItem icon={ <PeopleSettings20Regular /> } value="add/remove" className={ compiledStyles.colorFix }>Add/Remove</NavItem>
+                <NavItem icon={ <ArrowSync20Regular /> } value="sync" className={ compiledStyles.colorFix }>Sync</NavItem>
+
+                <NavSectionHeader>System</NavSectionHeader>
+                <NavItem icon={ <Settings20Regular /> } value="settings" className={ compiledStyles.colorFix }>Settings</NavItem>
+                <NavItem icon={ <Info20Regular /> } value="about" className={ compiledStyles.colorFix }>About</NavItem>
             </NavDrawerBody>
         </NavDrawer>
     );
