@@ -1,8 +1,8 @@
 'use client';
 
+import { Divider, Subtitle1, Subtitle2, Text, Title1, Title3, Link } from '@fluentui/react-components';
+import { Layout, LayoutItem } from '../_components/elements/LayoutSystem';
 import { useEffect, useState } from 'react';
-import { Layout } from '../_components/elements/LayoutSystem';
-import { Text } from '@fluentui/react-components';
 import { useStyleList } from '../_components/styles/pages/About';
 
 /**
@@ -53,7 +53,20 @@ export default function Page(): React.ReactNode {
     // Render the about screen with the legal notices and other info about the app.
     return (
         <Layout>
-            <Text className={ compiledStyles.licenseText }>{ rawLicenseText }</Text>
+            <LayoutItem>
+                <LayoutItem>
+                    <Title1>Credits</Title1>
+                    <Subtitle1>Created by: Elliot Huffman</Subtitle1>
+                    <Subtitle2>Source Code: https://github.com/elliot-huffman/check-in</Subtitle2>
+                    <Subtitle2>License Agreement: https://github.com/elliot-huffman/check-in/blob/main/LICENSE</Subtitle2>
+                    &nbsp;
+                    <Divider />
+                    &nbsp;
+                    <Title3>Third-party components and libraries and their required legal notices:</Title3>
+                    &nbsp;
+                </LayoutItem>
+                <Text className={ compiledStyles.licenseText }>{ rawLicenseText }</Text>
+            </LayoutItem>
         </Layout>
     );
 }
