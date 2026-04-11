@@ -93,7 +93,7 @@ function RootContent(props: RootLayoutProps): React.ReactNode {
                 <FluentProvider theme={ selectedTheme }>
                     <html lang="en" className={ compiledStyles.html }>
                         <head>
-                            <title>STACC - Check In</title>
+                            <title>ElHuff - Check In</title>
                             <meta name="description" content="Application that checks people into and out of events, buildings, or systems." />
                         </head>
                         <body className={ compiledStyles.body }>

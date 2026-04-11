@@ -1,7 +1,7 @@
 {
 	"folders": [
 		{
-			"name": "STACC - Check In",
+			"name": "ElHuff - Check In",
 			"path": "."
 		}
 	],
@@ -39,7 +39,10 @@
 			"**/*.js": true,
 			"**/*.js.map": true
 		},
-		"window.border": "white"
+		"window.border": "white",
+		"cSpell.words": [
+			"elhuff"
+		]
 	},
 	"extensions": {
 		"recommendations": [

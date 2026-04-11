@@ -30,7 +30,7 @@ export class DeepLinkEngine {
     /**
      * Validates and then executes the provided deep link.
      * Invalid links are ignored.
-     * @param deepLink Link provided by the OS when the app is opened via a deep link. The link is expected to be in the shape of a URI, e.g. stacc://command?param1=value1&param2=value2.
+     * @param deepLink Link provided by the OS when the app is opened via a deep link. The link is expected to be in the shape of a URI, e.g. check-in://command?param1=value1&param2=value2.
      */
     // eslint-disable-next-line @typescript-eslint/class-methods-use-this
     deepLinkHandler(deepLink: string): void {
@@ -43,7 +43,7 @@ export class DeepLinkEngine {
             /** Parse the deep link into a URL object for easier manipulation so no regex is needed. */
             const parsedLink = new URL(deepLink);
 
-            // Handle each command provided by the deep link. The command is the host, e.g. stacc://command, where command is the host.
+            // Handle each command provided by the deep link. The command is the host, e.g. check-in://command, where command is the host.
             switch (parsedLink.host) {
                 // Catch all
                 default:

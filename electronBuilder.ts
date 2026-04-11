@@ -2,8 +2,8 @@ import type { Configuration } from "electron-builder";
 
 /** Electron compile settings used to convert the compiled files to platform binaries. */
 const builderConfig: Configuration = {
-    'appId': 'com.st-teresa.check-in',
-    'productName': 'STACC - Check-In',
+    'appId': 'me.huffman.elliot.check-in',
+    'productName': 'elHuff - Check-In',
     'copyright': 'Copyright © 2026 Elliot Huffman',
     'executableName': 'Check-In',
     'electronFuses': {
@@ -22,8 +22,8 @@ const builderConfig: Configuration = {
         "user-interface/out"
     ],
     'protocols': {
-        'name': 'STACC - Check-In',
-        'schemes': ['stacc-check-in']
+        'name': 'elHuff - Check-In',
+        'schemes': ['check-in']
     },
     'win': {
         'compression': 'maximum',
