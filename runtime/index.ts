@@ -1,6 +1,8 @@
 import { Menu, app as electron } from 'electron';
 import { DeepLinkEngine } from './core/DeepLink.js';
 import type { WindowReference } from './Utility/types/global.js';
+import { startWindow } from './windows/main.js';
+import { initializeIpc } from './windows/shared/ipcConfiguration.js';
 
 // Disable the built-in menu in production mode
 if (electron.isPackaged) { Menu.setApplicationMenu(null); }
@@ -44,8 +46,10 @@ if (!isFirstInstance) {
     await electron.whenReady();
 
     // Render Main UI
+    await startWindow(electron.getAppPath(), windowReference);
 
     // Init IPC
+    initializeIpc();
 
     // Pass a deep link to the router if one exists
     deepLinkRouter.deepLinkHandler(process.argv[process.argv.length - 1] ?? '');
