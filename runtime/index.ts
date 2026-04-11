@@ -1,8 +1,8 @@
 import { Menu, app as electron } from 'electron';
 import { DeepLinkEngine } from './core/DeepLink.js';
 import type { WindowReference } from './Utility/types/global.js';
-import { startWindow } from './windows/main.js';
 import { initializeIpc } from './windows/shared/ipcConfiguration.js';
+import { startWindow } from './windows/main.js';
 
 // Disable the built-in menu in production mode
 if (electron.isPackaged) { Menu.setApplicationMenu(null); }
@@ -43,16 +43,17 @@ if (!isFirstInstance) {
     electron.on('open-url', (_event, url) => { deepLinkRouter.deepLinkHandler(url); });
 
     // Wait to ensure that the Electron is ready before starting main window render to prevent crashes.
-    await electron.whenReady();
+    electron.whenReady().then(async () => {
+        // Render Main UI
+        await startWindow(electron.getAppPath(), windowReference);
 
-    // Render Main UI
-    await startWindow(electron.getAppPath(), windowReference);
+        // Init IPC
+        initializeIpc();
 
-    // Init IPC
-    initializeIpc();
-
-    // Pass a deep link to the router if one exists
-    deepLinkRouter.deepLinkHandler(process.argv[process.argv.length - 1] ?? '');
+        // Pass a deep link to the router if one exists
+        deepLinkRouter.deepLinkHandler(process.argv[process.argv.length - 1] ?? '');
+    })
+        .catch((error: unknown) => { throw error; });
 }
 
 // Close the background process when all windows are closed. This is because the app runs in the background like on MacOS for all OSs by default.

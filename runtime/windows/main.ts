@@ -24,10 +24,10 @@ export async function startWindow(appPath: string, windowReference: WindowRefere
 
     // Initialize the main window and store a reference to it in the provided window reference container for use in other parts of the app.
     windowReference.mainWindow = new BrowserWindow({
-        'icon': join(staticUiDir, '../assets/Logo.ico'),
+        'icon': join(staticUiDir, '../../assets/Logo.ico'),
         'webPreferences': {
             'partition': MAIN_SESSION_NAME,
-            'preload': join(runtimeDir, 'windows/shared/mainPreload.js')
+            'preload': join(runtimeDir, 'windows/shared/mainPreload.cjs')
         }
     });
 
