@@ -27,7 +27,7 @@ const builderConfig: Configuration = {
     },
     'win': {
         'compression': 'maximum',
-        'icon': 'assets/icons/Logo.ico',
+        'icon': 'assets/Logo.ico',
         'target': [
             {
                 'target': 'dir',
