@@ -24,6 +24,7 @@ export class AuthenticationEngine {
 
         // Configure the initial auth credential
         this.entra = new InteractiveBrowserCredential({
+            'browserCustomizationOptions': { 'successMessage': '<h1>Successfully Authenticated to the Check-In app</h1><br><p>You can now close this window.</p>' },
             'clientId': this.#settingsEngine.currentSettings.clientId,
             'tenantId': this.#settingsEngine.currentSettings.tenantId
         });
