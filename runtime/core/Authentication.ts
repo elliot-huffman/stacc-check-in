@@ -53,6 +53,12 @@ export class AuthenticationEngine {
     }
 
     /**
+     * Resets the singleton instance to an uninitialized state.
+     * @deprecated This is used for testing purposes to ensure that each test can start with a clean slate.
+     */
+    public static clearInstance(): void { this.instance = void 0; }
+
+    /**
      * Checks the access token's claims and cryptographic validity to determine if it is a valid Entra ID access token for this application.
      *
      * Client ID defaults to the client ID specified in the settings engine's current settings if not provided.
