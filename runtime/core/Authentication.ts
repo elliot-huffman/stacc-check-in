@@ -296,20 +296,20 @@ export class AuthenticationEngine {
 
     /**
      * Retrieves the OpenID configuration for a specified tenant and version.
-     * @param tenantId Tenant ID for which to retrieve the OpenID configuration.
+     * @param tenantIdentifier Tenant ID or domain for which to retrieve the OpenID configuration.
      * @param version Schema version of the OpenID configuration to retrieve ('1.0' or '2.0').
      * @returns OpenID configuration if available, otherwise undefined.
      */
     // eslint-disable-next-line @typescript-eslint/class-methods-use-this
-    async #getTenantConfig(tenantId: string & tags.Format<'uuid'>, version: '1.0' | '2.0'): Promise<OpenIdConfiguration | undefined> {
+    async #getTenantConfig(tenantIdentifier: string & tags.Format<'uuid'> | string & tags.Format<'hostname'>, version: '1.0' | '2.0'): Promise<OpenIdConfiguration | undefined> {
         // #region Input Validation
-        assertGuardEquals(tenantId);
+        assertGuardEquals(tenantIdentifier);
 
         assertGuardEquals(version);
         // #endregion Input Validation
 
         /** Raw OpenID configuration response for the specified tenant and version. */
-        const rawConfigResponse = await fetch(`https://login.microsoftonline.com/${ tenantId }/${ version === '2.0' ? 'v2.0/' : '' }.well-known/openid-configuration`);
+        const rawConfigResponse = await fetch(`https://login.microsoftonline.com/${ tenantIdentifier }/${ version === '2.0' ? 'v2.0/' : '' }.well-known/openid-configuration`);
 
         // If the config is not available, return undefined as it is an invalid tenant
         if (rawConfigResponse.status !== 200) { return void 0; }
