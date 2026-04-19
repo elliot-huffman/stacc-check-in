@@ -115,7 +115,7 @@ export class StorageEngine {
                     // Only operate on JSON files
                     if (memberFileMeta.isFile() && memberFileMeta.name.toLowerCase().endsWith('.json')) {
                         /** Raw text data straight from the member file to be validated (untrusted). */
-                        const rawMemberContent = await readFile(join(this.#settingsEngine.currentSettings.memberFolderPath, memberFileMeta.name), 'utf8');
+                        const rawMemberContent = await readFile(join(this.#calculateFolderPath('member'), memberFileMeta.name), 'utf8');
 
                         // Gracefully parse the member file and add it to the computed member list if valid, otherwise skip it and move on to the next file without halting the entire load process if a single file is invalid.
                         try {
