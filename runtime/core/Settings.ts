@@ -8,7 +8,7 @@ import { json } from 'typia';
 /** Engine responsible for managing persisted application settings. */
 export class SettingsEngine {
     /** Instance of the SettingsEngine singleton. */
-    public static instance: SettingsEngine | undefined = void 0;
+    static #instance: SettingsEngine | undefined = void 0;
     /** Path to the directory where the settings file is stored and other data can be stored. */
     public appDataPath: string;
     /** Current settings for the application. These are stored on non-volatile memory. Loaded at startup. */
@@ -48,10 +48,10 @@ export class SettingsEngine {
      */
     public static getInstance(): SettingsEngine {
         // Check if the singleton instance already exists. If not, create it.
-        if (SettingsEngine.instance === void 0) { SettingsEngine.instance = new SettingsEngine(); }
+        if (SettingsEngine.#instance === void 0) { SettingsEngine.#instance = new SettingsEngine(); }
 
         // Return the singleton instance of the SettingsEngine.
-        return SettingsEngine.instance;
+        return SettingsEngine.#instance;
     }
 
     /**
@@ -59,7 +59,7 @@ export class SettingsEngine {
      * This is useful for testing purposes or if you need to reinitialize the settings during runtime.
      * @deprecated This method is intended for testing and should not be used in production code.
      */
-    public static clearInstance(): void { SettingsEngine.instance = void 0; }
+    public static clearInstance(): void { SettingsEngine.#instance = void 0; }
 
     // #endregion Initialization
 

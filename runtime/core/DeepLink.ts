@@ -3,7 +3,7 @@ import { assertGuardEquals, equals, type tags } from 'typia';
 /** Provide deep linking support to the application. */
 export class DeepLinkEngine {
     /** Global instance of the class to ensure that only one is ever used (singleton). */
-    private static instance: DeepLinkEngine | undefined = void 0;
+    static #instance: DeepLinkEngine | undefined = void 0;
 
     /** Creates a new instance of DeepLinkEngine when called. */
     // eslint-disable-next-line @typescript-eslint/no-empty-function
@@ -15,17 +15,17 @@ export class DeepLinkEngine {
      */
     public static getInstance(): DeepLinkEngine {
         /** Check if the singleton instance is initialized, and initialize it if it isn't. */
-        if (typeof this.instance === 'undefined') { this.instance = new DeepLinkEngine(); }
+        if (typeof this.#instance === 'undefined') { this.#instance = new DeepLinkEngine(); }
 
         // If the instance is already initialized, return it to the caller.
-        return this.instance;
+        return this.#instance;
     }
 
     /**
      * Resets the singleton instance to an uninitialized state.
      * @deprecated This is used for testing purposes to ensure that each test can start with a clean slate.
      */
-    public static clearInstance(): void { this.instance = void 0; }
+    public static clearInstance(): void { this.#instance = void 0; }
 
     /**
      * Validates and then executes the provided deep link.

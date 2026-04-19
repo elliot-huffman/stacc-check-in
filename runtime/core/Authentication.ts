@@ -8,7 +8,7 @@ import { SettingsEngine } from './Settings.js';
 /** Engine responsible for managing and validating authentication with Entra ID. */
 export class AuthenticationEngine {
     /** Instance of the AuthenticationEngine singleton. */
-    public static instance: AuthenticationEngine | undefined = void 0;
+    static #instance: AuthenticationEngine | undefined = void 0;
     /** Configured authentication credential that logs into Entra ID and can be used to retrieve access tokens. */
     public entra: InteractiveBrowserCredential;
     /** Instance of the settings engine to use for authentication configuration. */
@@ -43,7 +43,7 @@ export class AuthenticationEngine {
      */
     public static async getInstance(): Promise<AuthenticationEngine> {
         // Check if the singleton instance already exists. If not, create it.
-        if (AuthenticationEngine.instance === void 0) {
+        if (AuthenticationEngine.#instance === void 0) {
             /** Point in time capture of the system's global metadata store's current state. */
             const settingsEngine = SettingsEngine.getInstance();
 
@@ -51,18 +51,18 @@ export class AuthenticationEngine {
             await settingsEngine.isLoading;
 
             // Instantiate the class instance
-            AuthenticationEngine.instance = new AuthenticationEngine(settingsEngine);
+            AuthenticationEngine.#instance = new AuthenticationEngine(settingsEngine);
         }
 
         // Return the singleton instance of the AuthenticationEngine.
-        return AuthenticationEngine.instance;
+        return AuthenticationEngine.#instance;
     }
 
     /**
      * Resets the singleton instance to an uninitialized state.
      * @deprecated This is used for testing purposes to ensure that each test can start with a clean slate.
      */
-    public static clearInstance(): void { this.instance = void 0; }
+    public static clearInstance(): void { this.#instance = void 0; }
 
     // #endregion Initialization
 

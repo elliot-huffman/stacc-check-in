@@ -3,7 +3,7 @@ import { StorageEngine } from './Storage.js';
 /** Engine responsible for managing access control operations, the main business logic for the app. */
 export class AccessControlEngine {
     /** Instance of the AccessControlEngine singleton. */
-    public static instance: AccessControlEngine | undefined = void 0;
+    static #instance: AccessControlEngine | undefined = void 0;
     /** Instance of the StorageEngine used by the AccessControlEngine. */
     #storageEngine: StorageEngine;
 
@@ -28,23 +28,23 @@ export class AccessControlEngine {
      */
     public static async getInstance(): Promise<AccessControlEngine> {
         /** Check if the singleton instance is initialized, and initialize it if it isn't. */
-        if (typeof this.instance === 'undefined') {
+        if (typeof this.#instance === 'undefined') {
             /** Instance of the StorageEngine used by the AccessControlEngine. */
             const storageEngine = await StorageEngine.getInstance();
 
             // Finish loading the access control engine's properties and state after the storage engine is loaded, as it is a dependency for the access control engine.
-            this.instance = new AccessControlEngine(storageEngine);
+            this.#instance = new AccessControlEngine(storageEngine);
         }
 
         // If the instance is already initialized, return it to the caller.
-        return this.instance;
+        return this.#instance;
     }
 
     /**
      * Resets the singleton instance to an uninitialized state.
      * @deprecated This is used for testing purposes to ensure that each test can start with a clean slate.
      */
-    public static clearInstance(): void { this.instance = void 0; }
+    public static clearInstance(): void { this.#instance = void 0; }
 
     // #endregion Initialization
 }

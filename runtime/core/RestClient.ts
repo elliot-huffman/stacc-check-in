@@ -4,7 +4,7 @@ import { AuthenticationEngine } from './Authentication.js';
 /** Client that makes various REST API calls and provides authenticated/configured SDKs. */
 export class RestClientEngine {
     /** Global instance of the class to ensure that only one is ever used (singleton). */
-    public static instance: RestClientEngine | undefined = void 0;
+    static #instance: RestClientEngine | undefined = void 0;
     /** Instance of the AuthenticationEngine class used for retrieving access tokens to authenticate REST API calls with Entra ID. */
     #authEngine: AuthenticationEngine;
 
@@ -22,23 +22,23 @@ export class RestClientEngine {
      */
     public static async getInstance(): Promise<RestClientEngine> {
         // Check if the singleton instance already exists. If not, create it.
-        if (RestClientEngine.instance === void 0) {
+        if (RestClientEngine.#instance === void 0) {
             /** Initialize the AuthenticationEngine instance. */
             const authEngine = await AuthenticationEngine.getInstance();
 
             // Instantiate the class instance
-            RestClientEngine.instance = new RestClientEngine(authEngine);
+            RestClientEngine.#instance = new RestClientEngine(authEngine);
         }
 
         // Return the singleton instance of the RestClientEngine.
-        return RestClientEngine.instance;
+        return RestClientEngine.#instance;
     }
 
     /**
      * Resets the singleton instance to an uninitialized state.
      * @deprecated This is used for testing purposes to ensure that each test can start with a clean slate.
      */
-    public static clearInstance(): void { this.instance = void 0; }
+    public static clearInstance(): void { this.#instance = void 0; }
 
     // #endregion Initialization
 
