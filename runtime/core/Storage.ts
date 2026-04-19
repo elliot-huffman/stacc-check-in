@@ -1,6 +1,6 @@
+import type { CheckInOut, Member } from '../Utility/types/AccessControl.js';
 import { assertGuardEquals, json } from 'typia';
-import { readFile, readdir, unlink, writeFile } from 'node:fs/promises';
-import type { Member } from '../Utility/types/AccessControl.js';
+import { mkdir, readFile, readdir, unlink, writeFile } from 'node:fs/promises';
 import { SettingsEngine } from './Settings.js';
 import { join } from 'node:path';
 import { randomUUID } from 'node:crypto';
@@ -48,6 +48,165 @@ export class StorageEngine {
     public static clearInstance(): void { this.#instance = void 0; }
 
     // #endregion Initialization
+
+    /**
+     * Creates a check-in audit log entry for a member.
+     * @param memberId Unique identifier of the member being checked in.
+     * @param activity List of activities the member is checking in for.
+     * @param initiatingActor Unique identifier of the principal that initiated the check-in.
+     * @returns Unique identifier of the created audit log entry.
+     */
+    public async checkIn(memberId: CheckInOut['memberId'], activity: string[], initiatingActor: CheckInOut['initiatingActor']): Promise<CheckInOut['id']> {
+        // #region Input Validation
+        assertGuardEquals(memberId);
+
+        assertGuardEquals(activity);
+
+        assertGuardEquals(initiatingActor);
+        // #endregion Input Validation
+
+        /** Captures the check-in audit log entry with a guaranteed unique identifier for persistent storage. */
+        const storedCheckInLog: CheckInOut = {
+            activity,
+            'id': randomUUID(),
+            initiatingActor,
+            memberId,
+            'timestamp': new Date().toISOString(),
+            'type': 'check-in'
+        };
+
+        /** Path to the check-in log folder in persistent storage. */
+        const checkInOutLogFolderPath = this.#calculateFolderPath('checkInOutLog');
+
+        /** Path to the check-in log JSON file in persistent storage. */
+        const checkInLogPath = join(checkInOutLogFolderPath, `${ storedCheckInLog.id }.json`);
+
+        // Create the log folder if it doesn't exist so the check-in record has a valid destination.
+        await mkdir(checkInOutLogFolderPath, { 'recursive': true });
+
+        // Write the check-in log to disk.
+        await writeFile(checkInLogPath, json.stringify(storedCheckInLog));
+
+        // Return the created audit log identifier to the caller.
+        return storedCheckInLog.id;
+    }
+
+    /**
+     * Creates a check-out audit log entry for a member.
+     * @param memberId Unique identifier of the member being checked out.
+     * @param initiatingActor Unique identifier of the principal that initiated the check-out.
+     * @returns Unique identifier of the created audit log entry.
+     */
+    public async checkOut(memberId: CheckInOut['memberId'], initiatingActor: CheckInOut['initiatingActor']): Promise<CheckInOut['id']> {
+        // #region Input Validation
+        assertGuardEquals(memberId);
+
+        assertGuardEquals(initiatingActor);
+        // #endregion Input Validation
+
+        /** Captures the check-out audit log entry with a guaranteed unique identifier for persistent storage. */
+        const storedCheckOutLog: CheckInOut = {
+            'id': randomUUID(),
+            initiatingActor,
+            memberId,
+            'timestamp': new Date().toISOString(),
+            'type': 'check-out'
+        };
+
+        /** Path to the check-out log folder in persistent storage. */
+        const checkInOutLogFolderPath = this.#calculateFolderPath('checkInOutLog');
+
+        /** Path to the check-out log JSON file in persistent storage. */
+        const checkOutLogPath = join(checkInOutLogFolderPath, `${ storedCheckOutLog.id }.json`);
+
+        // Create the log folder if it doesn't exist so the check-out record has a valid destination.
+        await mkdir(checkInOutLogFolderPath, { 'recursive': true });
+
+        // Write the check-out log to disk.
+        await writeFile(checkOutLogPath, json.stringify(storedCheckOutLog));
+
+        // Return the created audit log identifier to the caller.
+        return storedCheckOutLog.id;
+    }
+
+    /**
+     * Retrieves a specific audit log entry from persistent storage by its unique ID.
+     * @param id Unique identifier of the audit log entry to retrieve.
+     * @returns The requested audit log entry.
+     */
+    public async getCheckInOutLogs(id: CheckInOut['id']): Promise<CheckInOut>;
+
+    /**
+     * Retrieves all audit log entries from persistent storage.
+     * @returns List of all stored audit log entries.
+     */
+    public async getCheckInOutLogs(id: never, _filter?: never): Promise<CheckInOut[]>;
+
+    /**
+     * Retrieves one audit log entry by its unique identifier or all audit log entries when no log ID is provided.
+     * @param id Optional unique identifier of the audit log entry to retrieve.
+     * @param _filter Filter used to select a subset of audit logs based on specific criteria. Not currently implemented and should be left undefined.
+     * @returns The requested audit log entry or the full audit log list.
+     */
+    public async getCheckInOutLogs(id?: CheckInOut['id'], _filter?: never): Promise<CheckInOut | CheckInOut[]> {
+        // #region Input Validation
+        assertGuardEquals(id);
+
+        assertGuardEquals(_filter);
+        // #endregion Input Validation
+
+        /** Path to the check-in/check-out log folder in persistent storage. */
+        const checkInOutLogFolderPath = this.#calculateFolderPath('checkInOutLog');
+
+        // Pull all of the audit logs if in all mode.
+        if (!id) {
+            try {
+                /** Directory entries inside the check-in/check-out storage folder. */
+                const checkInOutFileMetaList = await readdir(checkInOutLogFolderPath, { 'withFileTypes': true });
+
+                /** Computed list of valid check-in/check-out logs loaded from the storage folder. */
+                const computedCheckInOutLogList: CheckInOut[] = [];
+
+                // Iterate through each detected file and load them if they are audit log files.
+                for (const checkInOutFileMeta of checkInOutFileMetaList) {
+                    // Only operate on JSON files.
+                    if (checkInOutFileMeta.isFile() && checkInOutFileMeta.name.toLowerCase().endsWith('.json')) {
+                        /** Raw text data straight from the audit log file to be validated (untrusted). */
+                        const rawCheckInOutContent = await readFile(join(checkInOutLogFolderPath, checkInOutFileMeta.name), 'utf8');
+
+                        // Gracefully parse the audit log file and add it to the computed list if valid, otherwise skip it and continue loading the remaining files.
+                        try {
+                            /** Parsed audit log object from the raw JSON content. */
+                            const parsedCheckInOutLog = json.assertParse<CheckInOut>(rawCheckInOutContent);
+
+                            // Add the log entry to the computed list.
+                            computedCheckInOutLogList.push(parsedCheckInOutLog);
+                        } catch (_error) {
+                            // Skip the file if it fails validation.
+                        }
+                    }
+                }
+
+                // Return the list of audit log entries to the caller.
+                return computedCheckInOutLogList;
+            } catch (error) {
+                // If the directory is missing, return an empty list to indicate that there are no audit logs instead of throwing an error.
+                if ((error as NodeJS.ErrnoException).code === 'ENOENT') { return []; }
+
+                // Otherwise throw the error up a level as it is unexpected and not something that can be handled gracefully here.
+                throw error;
+            }
+        }
+
+        /** Raw text data straight from the audit log file to be validated (untrusted). */
+        const rawCheckInOutContent = await readFile(join(checkInOutLogFolderPath, `${ id }.json`), 'utf8');
+
+        /** Parsed audit log object from the raw JSON content. */
+        const parsedCheckInOutLog = json.assertParse<CheckInOut>(rawCheckInOutContent);
+
+        // Return the parsed audit log entry to the caller.
+        return parsedCheckInOutLog;
+    }
 
     /**
      * Creates a new member or updates (upsert) an existing member in persistent storage.
@@ -182,7 +341,7 @@ export class StorageEngine {
      * @param folderType Flag that indicates which path to calculate based on the current settings.
      * @returns Full path to the requested folder type.
      */
-    #calculateFolderPath(folderType: 'checkInLog' | 'member'): string {
+    #calculateFolderPath(folderType: 'checkInOutLog' | 'member'): string {
         // #region Input Validation
         assertGuardEquals(folderType);
         // #endregion Input Validation
@@ -192,7 +351,7 @@ export class StorageEngine {
 
         // Apply the appropriate subfolder based on the folder type, and use the default subfolder if a custom path is not provided in the settings, which allows for both a sensible default and user customization when needed.
         switch (folderType) {
-            case 'checkInLog':
+            case 'checkInOutLog':
                 // Check if a custom audit log folder path is provided in the settings, and if not, use the default 'auditLogs' subfolder within the app data path to store the audit logs, which keeps them organized and separate from other types of data.
                 if (!this.#settingsEngine.currentSettings.checkInLogFolderPath) {
                     // Default to using a sub folder within the app's data directory by default
