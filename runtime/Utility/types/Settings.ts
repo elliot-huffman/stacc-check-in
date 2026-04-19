@@ -2,6 +2,14 @@ import type { tags } from 'typia';
 
 /** Represents the current settings for the application that are stored on non-volatile memory. */
 export interface CurrentSettings {
+    /** List of activities for end users to be able to select during the check in process. */
+    'activityList': string[];
+    /**
+     * Path to the folder where the check in and check out logs are stored.
+     * Stores the logs in the same folder the settings file is stored if left undefined.
+     * @default undefined
+     */
+    'checkInLogFolderPath': string | undefined;
     /**
      * Client ID used for authenticating the end user.
      * Required to be configured before use.
@@ -14,12 +22,6 @@ export interface CurrentSettings {
      * @default 'common'
      */
     'tenantId': string & tags.Format<'uuid'> | 'common';
-    /**
-     * Path to the folder where the check in and check out logs are stored.
-     * Stores the logs in the same folder the settings file is stored if left undefined.
-     * @default undefined
-     */
-    'logFolderPath': string | undefined;
     /**
      * Path to the folder where member records are stored.
      * Stores the records in the same folder the settings file is stored if left undefined.

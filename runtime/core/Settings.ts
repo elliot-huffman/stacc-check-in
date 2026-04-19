@@ -24,8 +24,9 @@ export class SettingsEngine {
     private constructor() {
         // Initialize the current settings with default values. These will be overwritten once the actual settings are loaded.
         this.currentSettings = {
+            'activityList': [],
+            'checkInLogFolderPath': void 0,
             'clientId': NULL_UUID,
-            'logFolderPath': void 0,
             'memberFolderPath': void 0,
             'tenantId': 'common',
             'version': 1
