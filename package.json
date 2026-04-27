@@ -43,7 +43,7 @@
         "package": "electron-builder build --config electronBuilder.ts",
         "generate:LicenseList": "generate-license-file --input package.json --output ./user-interface/public/LicenseList.txt --overwrite"
     },
-    "packageManager": "npm@11.12.1",
+    "packageManager": "npm@11.13.0",
     "devEngines": {
         "runtime": {
             "name": "node",
@@ -59,9 +59,9 @@
         "@electron/fuses": "~2.1.1",
         "@shi-corp/development-utilities": "~2.2.0",
         "@types/jws": "~3.2.11",
-        "@types/markdown-it": "^14.1.2",
+        "@types/markdown-it": "~14.1.2",
         "babel-plugin-react-compiler": "~1.0.0",
-        "electron": "~41.2.1",
+        "electron": "~41.3.0",
         "electron-builder": "~26.8.1",
         "generate-license-file": "~4.1.1",
         "ts-patch": "~3.3.0",
@@ -69,11 +69,11 @@
     },
     "dependencies": {
         "@azure/identity": "~4.13.1",
-        "@fluentui/react-components": "~9.73.7",
-        "@fluentui/react-icons": "~2.0.324",
+        "@fluentui/react-components": "~9.73.8",
+        "@fluentui/react-icons": "~2.0.325",
         "@reduxjs/toolkit": "~2.11.2",
         "jws": "~4.0.1",
-        "markdown-it": "^14.1.1",
+        "markdown-it": "~14.1.1",
         "next": "~16.2.4",
         "react": "~19.2.5",
         "react-dom": "~19.2.5",
