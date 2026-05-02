@@ -221,7 +221,7 @@ export class AuthenticationEngine {
         if (clientId !== tokenComponents.payload.aud) { return false; }
 
         // If a tenant ID was provided for validation and the tenant ID from the token doesn't match, then the token is not valid for the expected tenant
-        if (tenantId && tokenTenantId !== tenantId) { return false; }
+        if (tenantId !== NULL_UUID && tokenTenantId !== tenantId) { return false; }
 
         // #endregion Claims Validation
 
